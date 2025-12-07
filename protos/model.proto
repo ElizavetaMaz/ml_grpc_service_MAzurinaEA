@@ -1,0 +1,36 @@
+syntax = "proto3";
+package mlservice.v1;
+
+service PredictionService {
+  rpc Health(HealthRequest) returns (HealthResponse);
+  rpc Predict(PredictRequest) returns (PredictResponse);
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;         // "ok"
+  string model_version = 2;  // e.g. "v1.0.0"
+}
+
+message PredictRequest { // хочу чтобы пользователь конкретно вводил все 13 признаков, для получения предсказания
+  double alcohol = 1;
+  double malic_acid = 2;
+  double ash = 3;
+  double alcalinity_of_ash = 4;
+  double magnesium = 5;
+  double total_phenols = 6;
+  double flavanoids = 7;
+  double nonflavanoid_phenols = 8;
+  double proanthocyanins = 9;
+  double color_intensity = 10;
+  double hue = 11;
+  double od280_od315 = 12;
+  double proline = 13;
+}
+
+
+message PredictResponse {
+  string prediction = 1;          // "class_0"
+  double confidence = 2;          // 0.93 (опционально)
+}
